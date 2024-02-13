@@ -1,0 +1,17 @@
+{
+    "option":{
+      "Transfer":{
+        "name":"继承账号",
+        "default": true,
+        "type": "checkbox",
+        "inject": ["Sub_Transfer.enabled"]
+      }
+    },
+    "entry": [
+      {
+        "name": "登录",
+        "task": "Startup",
+        "option":["Transfer"]
+      }
+    ]
+}

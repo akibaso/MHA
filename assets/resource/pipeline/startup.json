@@ -1,0 +1,129 @@
+{
+    "$schema": "../pipeline.schema.json",
+    "Startup":{
+        "next":[
+            "StartupFinish",
+            "AFKFinishS2",
+            "AFKFinishS1",
+            "AFKing",
+            "SKIP",
+            "DailyFreeLottery",
+            "Sub_Transfer",
+            "HBRTitle",
+            "Sub_StartHBR"
+        ]
+    },
+    "Sub_StartHBR": {
+        "is_sub": true,
+        "action": "StartApp",
+        "package": "com.heavenburnsred/com.unity3d.player.UnityPlayerActivity"
+    },
+    "HBRTitle":{
+        "action": "DoNothing",
+        "recognition": "OCR",
+        "text": ["緋染天空", "緋", "染"],
+        "next":["TAPTOSTART"]
+    },
+    "TAPTOSTART":{
+        "action": "Click",
+        "recognition": "OCR",
+        "text": ["TAP","TO","START"],
+        "target": true
+    },
+    "Sub_Transfer":{
+        "enabled": false,
+        "next": ["TransferS2","TransferS1"]
+    },
+    "TransferS1":{
+        "recognition": "OCR",
+        "text": "即將繼承以下資料",
+        "next":["TransferS1OK"]
+    },
+    "TransferS1OK":{
+        "recognition": "OCR",
+        "action": "Click",
+        "target": true,
+        "text": ["繼承"]
+    },
+    "TransferS2":{
+        "recognition": "OCR",
+        "text": ["確定要直接開始繼承嗎"],
+        "next": ["TransferS2OK"]
+    },
+    "TransferS2OK":{
+        "recognition": "OCR",
+        "action": "Click",
+        "target": true,
+        "text": ["OK","O","K"]
+    },
+    "TransferS3":{
+        "recognition": "OCR",
+        "text": "資料繼承完畢",
+        "next": ["TransferS3OK"]
+    },
+    "TransferS3OK":{
+        "recognition": "OCR",
+        "action": "Click",
+        "target": true,
+        "text": ["OK","O","K"]
+    },
+    "AFKing":{
+        "is_sub": true,
+        "recognition": "OCR",
+        "text": "結束自動操作",
+        "action": "Click",
+        "target": true
+    },
+    "AFKFinishS1":{
+        "is_sub": true,
+        "recognition": "OCR",
+        "text": "戰鬥成果",
+        "action": "Click"
+    },
+    "AFKFinishS2":{
+        "recognition": "OCR",
+        "text": "輕觸畫面繼續",
+        "action": "Click",
+        "next": ["ArenaMenu"]
+    },
+    "ArenaMenu":{
+        "recognition": "TemplateMatch",
+        "roi": [
+            22,
+            75,
+            52,
+            46
+        ],
+        "template": "UI/Back_22_75_52_46__0_25_152_146.png",
+        "action": "Click",
+        "target": true,
+        "next": ["ArenaBackVN"]
+    },
+    "ArenaBackVN":{
+        "recognition": "TemplateMatch",
+        "template": "UI/skip_1086_93_43_36__1010_43_143_136.png",
+        "roi": [
+            1086,
+            93,
+            43,
+            36
+        ],
+        "action": "Click"
+    },
+    "DailyFreeLottery":{
+        "recognition": "OCR",
+        "text": ["戰型探索","Lottery"],
+        "next":["SKIP"]
+    },
+    "SKIP":{
+        "recognition": "OCR",
+        "text": ["SKIP"],
+        "action": "Click",
+        "target": true,
+        "is_sub": true
+    },
+    "StartupFinish":{
+        "recognition": "OCR",
+        "text": ["主畫面","HOME"]
+    }
+}

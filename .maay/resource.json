@@ -1,0 +1,16 @@
+{
+    "resource": {
+      "default": {
+        "name": "HeavenBurnsRed",
+        "path": "@default"
+      }
+    },
+    "app": {
+      "start": "com.heavenburnsred/com.unity3d.player.UnityPlayerActivity",
+      "stop": "com.heavenburnsred",
+      "orientation": "landscape",
+      "size": {
+        "short": 720
+      }
+    }
+}
