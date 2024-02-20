@@ -8,7 +8,9 @@
             "AFKing",
             "SKIP",
             "DailyFreeLottery",
+            "Preparing",
             "Sub_Transfer",
+            "NetworkError",
             "HBRTitle",
             "Sub_StartHBR"
         ]
@@ -21,18 +23,31 @@
     "HBRTitle":{
         "action": "DoNothing",
         "recognition": "OCR",
-        "text": ["緋染天空", "緋", "染"],
-        "next":["TAPTOSTART"]
+        "text": [".*(?:緋|染|天|空).*"],
+        "next":["NetworkError","TAPTOSTART"],
+        "is_sub": true
+    },
+    "Preparing":{
+        "recognition": "OCR",
+        "text": ["[準備中]{3}","NOW","LOADING"]
+    },
+    "NetworkError":{
+        "recognition": "OCR",
+        "text": ["[連線失敗]{3}"],
+        "is_sub": true,
+        "next":["ClickOK"]
     },
     "TAPTOSTART":{
         "action": "Click",
         "recognition": "OCR",
-        "text": ["TAP","TO","START"],
-        "target": true
+        "text": ["TAP|TO|START"],
+        "target": true,
+        "timeout": 5000
     },
     "Sub_Transfer":{
         "enabled": false,
-        "next": ["TransferS2","TransferS1"]
+        "next": ["TransferS3","TransferS2","TransferS1"],
+        "is_sub": true
     },
     "TransferS1":{
         "recognition": "OCR",
@@ -48,24 +63,18 @@
     "TransferS2":{
         "recognition": "OCR",
         "text": ["確定要直接開始繼承嗎"],
-        "next": ["TransferS2OK"]
+        "next": ["ClickOK"]
     },
-    "TransferS2OK":{
+    "ClickOK":{
         "recognition": "OCR",
         "action": "Click",
         "target": true,
-        "text": ["OK","O","K"]
+        "text": ["[OK]+"]
     },
     "TransferS3":{
         "recognition": "OCR",
         "text": "資料繼承完畢",
-        "next": ["TransferS3OK"]
-    },
-    "TransferS3OK":{
-        "recognition": "OCR",
-        "action": "Click",
-        "target": true,
-        "text": ["OK","O","K"]
+        "next": ["ClickOK"]
     },
     "AFKing":{
         "is_sub": true,
@@ -77,23 +86,17 @@
     "AFKFinishS1":{
         "is_sub": true,
         "recognition": "OCR",
-        "text": "戰鬥成果",
+        "text": ["戰鬥成果","BattleResult","Battle","Result"],
         "action": "Click"
     },
     "AFKFinishS2":{
         "recognition": "OCR",
-        "text": "輕觸畫面繼續",
+        "text": ["[輕觸畫面繼續]{4}"],
         "action": "Click",
         "next": ["ArenaMenu"]
     },
     "ArenaMenu":{
         "recognition": "TemplateMatch",
-        "roi": [
-            22,
-            75,
-            52,
-            46
-        ],
         "template": "UI/Back_22_75_52_46__0_25_152_146.png",
         "action": "Click",
         "target": true,
@@ -102,17 +105,11 @@
     "ArenaBackVN":{
         "recognition": "TemplateMatch",
         "template": "UI/skip_1086_93_43_36__1010_43_143_136.png",
-        "roi": [
-            1086,
-            93,
-            43,
-            36
-        ],
         "action": "Click"
     },
     "DailyFreeLottery":{
         "recognition": "OCR",
-        "text": ["戰型探索","Lottery"],
+        "text": [".*(?:戰|型|探|索).*","Lottery"],
         "next":["SKIP"]
     },
     "SKIP":{
